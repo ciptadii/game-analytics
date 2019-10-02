@@ -1,11 +1,20 @@
 import React from 'react';
-import { Layout, Menu, Icon, Button, Avatar, Card } from 'antd';
-import { Link } from 'react-router-dom';
+import { Route, Link } from "react-router-dom";
+import { Layout, Menu, Icon, Avatar, Card } from 'antd';
 
+// import Monetization from './Dashboard/Monetization';
 import ChartLine from './Chart/ChartLine';
 
 const { Header, Sider } = Layout;
 const { SubMenu } = Menu;
+
+function Monetization() {
+  return (
+    <div>
+      Hello World
+    </div>
+  );
+}
 
 class DemoGame extends React.Component {
   state = {
@@ -17,16 +26,16 @@ class DemoGame extends React.Component {
     this.getChartData();
   }
 
-  getChartData(){
+  getChartData() {
     // make AJAX calls here
     this.setState({
       chartData: {
         labels: [
-          'Boston', 
-          'Worcester', 
-          'Springfield', 
-          'Lowell', 
-          'Cambridge', 
+          'Boston',
+          'Worcester',
+          'Springfield',
+          'Lowell',
+          'Cambridge',
           'New Bedford'
         ],
         datasets: [
@@ -65,73 +74,63 @@ class DemoGame extends React.Component {
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
           <div className="logo">
-            <Avatar src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-joystick-game-graphic-design-element-vector-illustration-png-image_3698982.jpg"/>
-            <span style={{padding: '10px', color: 'white'}} >Demo Game</span>
+            <Avatar src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-joystick-game-graphic-design-element-vector-illustration-png-image_3698982.jpg" />
+            <span style={{ padding: '10px', color: 'white' }} >Demo Game</span>
           </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1">
               <Icon type="stock" />
               <span>RealTime</span>
             </Menu.Item>
-              <SubMenu
-                key="sub1"
-                title={
-                  <span>
-                    <Icon type="dashboard" />
-                    <span>Dashboards</span>
-                  </span>
-                }
-              >
-                <Menu.Item key="2"><Icon type="dashboard" />Overview</Menu.Item>
-                <Menu.Item key="3"><Icon type="deployment-unit" />Engagement</Menu.Item>
-                <Menu.Item key="4"><Icon type="deployment-unit" />Benchmarks</Menu.Item>
-                <Menu.Item key="5"><Icon type="deployment-unit" />
-                <Button type='link' >
-                  <Link to='/Game/1782/Dashboard/Show/Monetization'> 
-                    Monetization 
-                  </Link>
-                  </Button>
-                </Menu.Item>
-                <Menu.Item key="6"><Icon type="deployment-unit" />Resources</Menu.Item>
-                <Menu.Item key="7"><Icon type="deployment-unit" />Progression</Menu.Item>
-                <Menu.Item key="8"><Icon type="deployment-unit" />Quality</Menu.Item>
-              </SubMenu>
-              <Menu.Item key="6">
-                <Icon type="search" />
-                <span>Explore</span>
+            <SubMenu
+              key="sub1"
+              title={
+                <span>
+                  <Icon type="dashboard" />
+                  <span>Dashboards</span>
+                </span>
+              }
+            >
+              <Menu.Item key="2"><Icon type="dashboard" />Overview</Menu.Item>
+              <Menu.Item key="3"><Icon type="deployment-unit" />Engagement</Menu.Item>
+              <Menu.Item key="4"><Icon type="deployment-unit" />Benchmarks</Menu.Item>
+              <Menu.Item key="5"><Icon type="deployment-unit" />
+                Monetization <Link to='Show/Monetization' />
               </Menu.Item>
-              <Menu.Item key="7">
-                <Icon type="funnel-plot" />
-                <span>Funnels</span>
-              </Menu.Item>
-              <Menu.Item key="8">
-                <Icon type="deployment-unit" />
-                <span>Cohorts</span>
-              </Menu.Item>
-            </Menu>
+              <Menu.Item key="6"><Icon type="deployment-unit" />Resources</Menu.Item>
+              <Menu.Item key="7"><Icon type="deployment-unit" />Progression</Menu.Item>
+              <Menu.Item key="8"><Icon type="deployment-unit" />Quality</Menu.Item>
+            </SubMenu>
+            <Menu.Item key="9">
+              <Icon type="search" />
+              <span>Explore</span>
+            </Menu.Item>
+            <Menu.Item key="10">
+              <Icon type="funnel-plot" />
+              <span>Funnels</span>
+            </Menu.Item>
+            <Menu.Item key="11">
+              <Icon type="deployment-unit" />
+              <span>Cohorts</span>
+            </Menu.Item>
+          </Menu>
         </Sider>
         <Layout>
-                <Header style={{ background: '#fff', padding: 0, margin: 0 }} >
-                    <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-                    <Menu.Item>
-                        Real Time
-                    </Menu.Item>
-                    <Menu.Item>
-                        Live Feed
-                    </Menu.Item>
-                    <Icon type="question-circle" theme="twoTone" style={{fontSize: '18px', float: 'right', marginTop: 15, marginRight: 20 }} />
-                    </Menu>
-                </Header>
-                <div style={{ background: '#ECECEC', paddingTop: '40px', paddingRight: '24px', paddingBottom: '72px', paddingLeft: '24px' }}>
-                    <Card title="Status" bordered={false}>
-                        Card Content
-                    </Card>
-                    <br/>
-                    <Card title="Chart 1" bordered={false} style={{ padding: '0px' }} >
-                        <ChartLine chartData={this.state.chartData} legendPosition= "bottom" />
-                    </Card>
-                </div>
-            </Layout>
+          <Header style={{ background: '#fff', padding: 0, margin: 0 }} >
+            <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+              <Menu.Item>
+                Real Time
+              </Menu.Item>
+              <Menu.Item>
+                Live Feed
+              </Menu.Item>
+              <Icon type="question-circle" theme="twoTone" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginRight: 20 }} />
+            </Menu>
+          </Header>
+          <main style={{ background: '#ECECEC', paddingTop: '40px', paddingRight: '24px', paddingBottom: '72px', paddingLeft: '24px' }}>
+            <Route exact path="Show/Monetization" component={Monetization} />
+          </main>
+        </Layout>
       </Layout>
     );
   }

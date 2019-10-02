@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Login from './component/Login/Login';
 import Home from './component/Home/Home';
@@ -11,28 +11,26 @@ import ManageDev from './component/Home/Manage/ManageDev';
 import Member from './component/Home/Manage/Member';
 import Forgot from './component/Forgot/Forgot';
 import DemoGame from './component/Home/DemoGame/DemoGame';
-import Monetization from './component/Home/DemoGame/Dashboard/Monetization';
 import NotMatch from './component/Errors/404';
 import './App.css';
 
 function App() {
   return (
-      <BrowserRouter>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/forgot" component={Forgot} />
-            <Route exact path="/reset" component={Reset} />
-            <Route exact path="/ManageAccount" component={ManageAccount} />
-            <Route exact path="/ManegeApp" component={ManegeApp} />
-            <Route exact path="/ManageDev" component={ManageDev} />
-            <Route exact path="/Member" component={Member} />
-            <Route exact path="/Game/:id/Dashboard/" component={DemoGame} />
-            <Route exact path="/Game/:id/Dashboard/Show/Monetization" component={Monetization} />
-            <Route component={NotMatch} />
-          </Switch>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/forgot" component={Forgot} />
+        <Route exact path="/reset" component={Reset} />
+        <Route exact path="/ManageAccount" component={ManageAccount} />
+        <Route exact path="/ManegeApp" component={ManegeApp} />
+        <Route exact path="/ManageDev" component={ManageDev} />
+        <Route exact path="/Member" component={Member} />
+        <Route exact path="/Game/:id/Dashboard" component={DemoGame} />
+        <Route component={NotMatch} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

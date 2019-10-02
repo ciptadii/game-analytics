@@ -55,7 +55,7 @@ class Home extends React.Component {
                 </div>
                 <div>
                 <Collapse defaultActiveKey={['1','2']} onChange={callback} expandIconPosition={expandIconPosition} style ={{width: '70%', margin: 'auto', marginTop: '10px', boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}} > 
-                    <Panel header="Loonix" key="1" extra={genExtra()} > 
+                    <Panel header="Loonix" key="1" extra={genExtra()} >
                       <Avatar shape="square" size={64} icon="user" />
                       <Button type="link" ><Link to="/game/1782/Dashboard/Monetization"><h3 style={{ color: 'black' }}>Game Name</h3></Link></Button>
                       <Icon type="more" style={{ float: 'right', marginTop: '25px'}} />
