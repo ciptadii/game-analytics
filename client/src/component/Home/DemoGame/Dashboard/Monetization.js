@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon, Card } from 'antd';
+import { Card } from 'antd';
 
 import ChartLine from '../Chart/ChartLine';
-
-const { Header } = Layout;
 
 export class Monetization extends Component {
     state = {
@@ -54,12 +52,26 @@ export class Monetization extends Component {
 
     render() {
         return (
-            <div style={{ background: '#ECECEC', paddingTop: '40px', paddingRight: '24px', paddingBottom: '72px', paddingLeft: '24px' }}>
-                <Card title="Status" bordered={false}>
-                    Card Content
-                    </Card>
-                <br />
-                <Card title="Chart 1" bordered={false} style={{ padding: '0px' }} >
+            <div>
+                <Card title="Revenue" bordered={false} style={{ padding: '0px', width: '554', height: '217' }}>
+                    <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
+                </Card> <br/>
+                <Card title="Transactions" bordered={false} style={{ padding: '0px' }} >
+                    <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
+                </Card> <br/>
+                <Card title="Conversion rate" bordered={false} style={{ padding: '0px' }} >
+                    <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
+                </Card> <br/>
+                <Card title="ARPDAU" bordered={false} style={{ padding: '0px' }} >
+                    <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
+                </Card> <br/>
+                <Card title="ARPPU" bordered={false} style={{ padding: '0px' }} >
+                    <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
+                </Card> <br/>
+                <Card title="Paying Users" bordered={false} style={{ padding: '0px' }} >
+                    <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
+                </Card> <br/>
+                <Card title="Revenue per item" bordered={false} style={{ padding: '0px' }} >
                     <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
                 </Card>
             </div>
