@@ -5,7 +5,7 @@ import { Layout, Menu, Icon, Avatar } from 'antd';
 import Monetization from './Dashboard/Monetization';
 import Resources from './Dashboard/Resources';
 
-const { Header, Sider } = Layout;
+const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 class DemoGame extends React.Component {
@@ -66,22 +66,11 @@ class DemoGame extends React.Component {
             </Menu>
           </Sider>
           <Layout>
-            <Header style={{ background: '#fff', padding: 0, margin: 0 }} >
-              <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-                <Menu.Item>
-                  Real Time
-                </Menu.Item>
-                <Menu.Item>
-                  Live Feed
-                </Menu.Item>
-                <Icon type="question-circle" theme="twoTone" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginRight: 20 }} />
-              </Menu>
-            </Header>
-            <main style={{ background: '#ECECEC', marginTop: '40px', marginRight: '24px', marginBottom: '72px', marginLeft: '24px' }}>
-              {/* <Switch> */}
+            <main style={{ background: '#ECECEC' }}>
+              <Switch>
                 <Route exact path="/Game/:id/Dashboard/Show/Monetization" component={Monetization} />
                 <Route exact path="/Game/:id/Dashboard/Show/Resources" component={Resources} />
-              {/* </Switch> */}
+              </Switch>
             </main>
           </Layout>
         </Layout>

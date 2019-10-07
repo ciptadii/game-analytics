@@ -11,8 +11,6 @@ import ManageDev from './component/Home/Manage/ManageDev';
 import Member from './component/Home/Manage/Member';
 import Forgot from './component/Forgot/Forgot';
 import DemoGame from './component/Home/DemoGame/DemoGame';
-import Monetization from './component/Home/DemoGame/Dashboard/Monetization';
-import Resources from './component/Home/DemoGame/Dashboard/Resources';
 import NotMatch from './component/Errors/404';
 import './App.css';
 
