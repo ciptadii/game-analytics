@@ -28,8 +28,6 @@ const content = (
   </div>
 );
 
-const buttonWidth = 70;
-
 // Table
 const columns = [
   {
@@ -124,7 +122,7 @@ export class Monetization extends Component {
   }
 
   render() {
-    const { chartData } = this.state
+    const { chartData } = this.state;
 
     return (
       <React.Fragment>
@@ -157,15 +155,31 @@ export class Monetization extends Component {
 
         <div style={{ width: '1279.200px', height: '40px' }} />
 
-        <div style={{marginLeft: '54.600px', marginRight: '54.600px' }}>
+        <div style={{ marginLeft: '72px', marginRight: '72px' }}>
           <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
-            <Row gutter={8}>
+            <Row>
               <Col span={12}>
                 <li>
-                  <Card title="Revenue" style={{ width: '564px', border: 1 }} >
+                  <Card title="Revenue" style={{ width: '564px', margin: 'auto' }}>
                     <Spin spinning={this.state.isLoading}>
                       <Line
-                        data={chartData.Revenue}
+                        data={{
+                          labels: [console.log(chartData)],
+                          datasets: [
+                            {
+                              label: 'Population',
+                              data: [
+                                617594,
+                                181045,
+                                153060,
+                                106519
+                              ],
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
                           legend: {
@@ -180,7 +194,7 @@ export class Monetization extends Component {
               </Col>
               <Col span={12}>
                 <li>
-                  <Card title="Transactions" style={{ width: '564px', border: 1 }} >
+                  <Card title="Transactions" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
                         data={chartData.Transactions}
@@ -194,10 +208,10 @@ export class Monetization extends Component {
               </Col>
             </Row>
             <br />
-            <Row gutter={8}>
+            <Row>
               <Col span={12}>
                 <li>
-                  <Card title="Conversion rate" style={{ width: '564px', border: 1 }} >
+                  <Card title="Conversion rate" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
                         data={chartData.conversionRate}
@@ -211,7 +225,7 @@ export class Monetization extends Component {
               </Col>
               <Col span={12}>
                 <li>
-                  <Card title="ARPDAU" style={{ width: '564px', border: 1 }} >
+                  <Card title="ARPDAU" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Bar
                         data={chartData.ARPDAU}
@@ -224,10 +238,10 @@ export class Monetization extends Component {
                 </li>
               </Col>
             </Row> <br />
-            <Row gutter={8}>
+            <Row>
               <Col span={12}>
                 <li>
-                  <Card title="ARPPU" style={{ width: '564px', border: 1 }} >
+                  <Card title="ARPPU" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
                         data={chartData.ARPPU}
@@ -241,7 +255,7 @@ export class Monetization extends Component {
               </Col>
               <Col span={12}>
                 <li>
-                  <Card title="Paying user" style={{ width: '564px', border: 1 }} >
+                  <Card title="Paying user" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
                         data={chartData.ARPDAU}
@@ -257,7 +271,7 @@ export class Monetization extends Component {
             <Row>
               <Col span={24}>
                 <li>
-                  <Card title="Revenue per item" style={{ width: '1150px', border: 1 }} >
+                  <Card title="Revenue per item" style={{ width: '1149.600px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
                         data={chartData.ARPDAU}
@@ -270,11 +284,8 @@ export class Monetization extends Component {
                 </li>
               </Col>
             </Row>
-          </ul> <br/>
-
-          
-            <Table columns={columns} dataSource={data} style={{ width: '1150px' }} />
-          
+          </ul> <br />
+          <Table columns={columns} dataSource={data} style={{ width: '1149.600px', margin: 'auto' }} />
         </div>
       </React.Fragment>
     )
