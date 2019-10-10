@@ -28,81 +28,6 @@ const content = (
   </div>
 );
 
-// Table
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: tags => (
-      <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (text, record) => (
-      <span>
-        <a>Invite {record.name}</a>
-        <Divider type="vertical" />
-        <a>Delete</a>
-      </span>
-    ),
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
 export class Monetization extends Component {
   state = {
     chartData: {},
@@ -123,6 +48,80 @@ export class Monetization extends Component {
 
   render() {
     const { chartData } = this.state;
+
+    // Table
+    const columns = [
+      {
+        title: 'Date',
+        dataIndex: 'date',
+        key: 'date',
+        render: text => <a>{text}</a>,
+      },
+      {
+        title: 'Revenue per transaction',
+        dataIndex: 'age',
+        key: 'age',
+      },
+      {
+        title: 'Transactions',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'Transactions',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'Conversion rate',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'ARPDAU',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'ARPPU',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'DAU',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'Revenue per transaction',
+        dataIndex: 'address',
+        key: 'address',
+      }
+    ];
+
+    const data = [
+      {
+        key: '1',
+        date: chartData.thisWeek,
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+        tags: ['nice', 'developer'],
+      },
+      {
+        key: '2',
+        name: 'Jim Green',
+        age: 42,
+        address: 'London No. 1 Lake Park',
+        tags: ['loser'],
+      },
+      {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+        tags: ['cool', 'teacher'],
+      },
+    ];
 
     return (
       <React.Fragment>
@@ -164,16 +163,11 @@ export class Monetization extends Component {
                     <Spin spinning={this.state.isLoading}>
                       <Line
                         data={{
-                          labels: [console.log(chartData)],
+                          labels: chartData.thisWeek,
                           datasets: [
                             {
-                              label: 'Population',
-                              data: [
-                                617594,
-                                181045,
-                                153060,
-                                106519
-                              ],
+                              label: 'Revenue per transaction',
+                              data: chartData.revenue,
                               backgroundColor: '#36a2eb',
                               borderColor: '#36a2eb',
                               fill: false
@@ -185,6 +179,15 @@ export class Monetization extends Component {
                           legend: {
                             display: this.props.displayLegend,
                             position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
                           }
                         }}
                       />
@@ -197,9 +200,33 @@ export class Monetization extends Component {
                   <Card title="Transactions" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
-                        data={chartData.Transactions}
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'Transaction',
+                              data: chartData.transactions,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
                         }}
                       />
                     </Spin>
@@ -214,9 +241,33 @@ export class Monetization extends Component {
                   <Card title="Conversion rate" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
-                        data={chartData.conversionRate}
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'Conversion rate',
+                              data: chartData.conversionRate,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
                         }}
                       />
                     </Spin>
@@ -228,9 +279,33 @@ export class Monetization extends Component {
                   <Card title="ARPDAU" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Bar
-                        data={chartData.ARPDAU}
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'ARPDAU',
+                              data: chartData.ARPDAU,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
                         }}
                       />
                     </Spin>
@@ -244,9 +319,33 @@ export class Monetization extends Component {
                   <Card title="ARPPU" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
-                        data={chartData.ARPPU}
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'ARPPU',
+                              data: chartData.revenue,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
                         }}
                       />
                     </Spin>
@@ -258,9 +357,33 @@ export class Monetization extends Component {
                   <Card title="Paying user" style={{ width: '564px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
-                        data={chartData.ARPDAU}
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'DAU',
+                              data: chartData.revenue,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
                         }}
                       />
                     </Spin>
@@ -274,9 +397,33 @@ export class Monetization extends Component {
                   <Card title="Revenue per item" style={{ width: '1149.600px', margin: 'auto' }} >
                     <Spin spinning={this.state.isLoading}>
                       <Line
-                        data={chartData.ARPDAU}
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'Coins',
+                              data: chartData.revenue,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
                         options={{
                           maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
                         }}
                       />
                     </Spin>

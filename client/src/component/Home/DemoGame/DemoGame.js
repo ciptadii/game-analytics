@@ -22,7 +22,7 @@ class DemoGame extends React.Component {
     return (
       <BrowserRouter>
         <Layout>
-          <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} style={{ position: 'fixed', minHeight: '100vh' }}>
+          <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} style={{ position: 'fixed', minHeight: '100vh', zIndex: 100 }}>
             <div className="logo">
               <Avatar src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-joystick-game-graphic-design-element-vector-illustration-png-image_3698982.jpg" />
               <span style={{ padding: '10px', color: 'white' }} >Demo Game</span>
@@ -65,7 +65,7 @@ class DemoGame extends React.Component {
               </Menu.Item>
             </Menu>
           </Sider>
-          <main style={{ width: '1519.200px', marginLeft: '200px' }}>
+          <main style={{ width: '1519.200px', marginLeft: '200px', zIndex: 50 }}>
             <Switch>
               <Route exact path="/Game/:id/Dashboard/Show/Monetization" component={Monetization} />
               <Route exact path="/Game/:id/Dashboard/Show/Resources" component={Resources} />
