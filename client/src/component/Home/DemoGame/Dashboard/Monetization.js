@@ -19,7 +19,7 @@ import './Monetization.css';
 
 // Menu Header
 const { Header } = Layout;
-const { subMenu } = Menu;
+const { SubMenu } = Menu;
 
 // PopUp Calendar
 const { MonthPicker, RangePicker } = DatePicker;
@@ -33,11 +33,11 @@ const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 const options = [
   {
     value: 'noSplit',
-    label: [<Icon type="close-square" />,<b> NO SPLIT</b>]
+    label: [<Icon type="close-square" />, <b> NO SPLIT</b>]
   },
   {
     value: 'advancedSplit',
-    label: [<Icon type="column-width" />,<b> ADVANCED SPLIT</b>]
+    label: [<Icon type="column-width" />, <b> ADVANCED SPLIT</b>]
   },
   {
     value: 'adFilters',
@@ -64,7 +64,8 @@ const options = [
 
 export class Monetization extends Component {
   state = {
-    current: 'summary',
+    current: 'Summary',
+    submenu: 'Monetization',
     chartData: {},
     isLoading: true
   };
@@ -175,14 +176,30 @@ export class Monetization extends Component {
       <React.Fragment>
         <div>
           <Header style={{ padding: 0, position: 'fixed', zIndex: 100, width: '1319.200px' }} >
-            <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" style={{ width: '1319.200px', paddingLeft: '20px', paddingRight: '20px' }}>
-              <Menu.Item key="summary">
+            <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" style={{ width: '1319.200px' }}>
+              <SubMenu
+                key="sub1"
+                title={
+                  this.state.submenu
+                }
+              >
+                <Menu.Item key="Overview">Overview</Menu.Item>
+                <Menu.Item key="Engagement">Engagement</Menu.Item>
+                <Menu.Item key="Benchmarks">Benchmarks</Menu.Item>
+                <Menu.Item key="Monetization">Monetization</Menu.Item>
+                <Menu.Item key="Resources">Resources</Menu.Item>
+                <Menu.Item key="Progression">Progression</Menu.Item>
+                <Menu.Item key="Quality">Quality</Menu.Item>
+              </SubMenu>
+              <Menu.Item key="Summary">
                 Summary
               </Menu.Item>
-              <Menu.Item key="purchase">
+              <Menu.Item key="Purchase">
                 Purchase behaviour
               </Menu.Item>
-              <Icon type="question-circle" theme="twoTone" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginRight: 20 }} />
+              <Icon type="appstore" theme="twoTone" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginLeft: 20, marginRight: 20 }}/>
+              <Icon type="stock" style={{ fontSize: '18px', float: 'right', marginTop: 15 }}/>
+              <Icon type="lock" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginRight: 20, marginLeft: 20 }}/>
             </Menu>
             <Menu>
               <div className="demo">
@@ -485,7 +502,16 @@ export class Monetization extends Component {
               </Col>
             </Row>
           </ul> <br />
-          <Table columns={columns} dataSource={data} style={{ width: '1149.600px', margin: 'auto' }} />
+          <div style={{ paddingBottom: '30px' }}>
+            <Spin spinning={this.state.isLoading}>
+              <Table columns={columns} dataSource={data} style={{ width: '1149.600px', margin: 'auto', background: 'white' }} />
+            </Spin>
+            <div style={{ width: '101.21px', height: '40px', margin: 'auto', paddingTop:'6px', paddingBottom: '6px' }}>
+              <Button type="primary" icon="download" size='large'>
+                Export
+              </Button>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     )

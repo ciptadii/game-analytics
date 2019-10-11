@@ -1,68 +1,320 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import {
+  Card,
+  Row,
+  Col,
+  Layout,
+  Menu,
+  Icon,
+  Button,
+  Spin,
+  DatePicker
+} from 'antd';
+import moment from 'moment';
+import { Line } from '../../../../../node_modules/react-chartjs-2';
 
-import ChartLine from '../Chart/ChartLine';
+import './Monetization.css';
 
-export class Resources extends Component {
+// Menu Header
+const { Header } = Layout;
+const { SubMenu } = Menu;
+
+// PopUp Calendar
+const { MonthPicker, RangePicker } = DatePicker;
+
+const dateFormat = 'YYYY/MM/DD';
+const monthFormat = 'YYYY/MM';
+
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+
+export class Monetization extends Component {
   state = {
-    chartData: {}
+    current: 'Summary',
+    submenu: 'Resources',
+    chartData: {},
+    isLoading: true
   };
 
   componentDidMount() {
-    this.getChartData();
+    fetch('https://my-json-server.typicode.com/ciptadii/jsonserver/db')
+      .then(response => response.json())
+      .then(data => this.setState({ chartData: data, isLoading: false }))
   }
 
-  getChartData() {
-    // make AJAX calls here
+  // handle click header
+  handleClick = e => {
+    console.log('click', e);
     this.setState({
-      chartData: {
-        labels: [
-          'Boston',
-          'Worcester',
-          'Springfield',
-          'Lowell',
-          'Cambridge',
-          'New Bedford'
-        ],
-        datasets: [
-          {
-            label: 'Population',
-            data: [
-              617594,
-              181045,
-              153060,
-              106519,
-              105162,
-              95072
-            ],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(255, 99, 132, 0.6)'
-            ]
-          }
-        ]
-      }
-    })
+      current: e.key,
+    });
+  }
+
+  // default props chart
+  static defaultProps = {
+    displayLegend: true,
+    legendPosition: 'top'
   }
 
   render() {
+    const { chartData } = this.state;
+
     return (
-      <div style={{ background: '#ECECEC', paddingTop: '40px', paddingRight: '24px', paddingBottom: '72px', paddingLeft: '24px' }}>
-        <Card title="Status" bordered={false}>
-          Card Content
-                    </Card>
-        <br />
-        <Card title="Chart 1" bordered={false} style={{ padding: '0px' }} >
-          <ChartLine chartData={this.state.chartData} legendPosition="bottom" />
-        </Card>
-      </div>
+      <React.Fragment>
+        <div>
+          <Header style={{ padding: 0, position: 'fixed', zIndex: 100, width: '1319.200px' }} >
+            <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" style={{ width: '1319.200px' }}>
+              <SubMenu
+                key="sub1"
+                title={
+                  this.state.submenu
+                }
+              >
+                <Menu.Item key="Overview">Overview</Menu.Item>
+                <Menu.Item key="Engagement">Engagement</Menu.Item>
+                <Menu.Item key="Benchmarks">Benchmarks</Menu.Item>
+                <Menu.Item key="Monetization">Monetization</Menu.Item>
+                <Menu.Item key="Resources">Resources</Menu.Item>
+                <Menu.Item key="Progression">Progression</Menu.Item>
+                <Menu.Item key="Quality">Quality</Menu.Item>
+              </SubMenu>
+              <Menu.Item key="Summary">
+                Summary
+              </Menu.Item>
+              <Menu.Item key="Coins">
+                Coins
+              </Menu.Item>
+              <Menu.Item key="Lives">
+                Lives
+              </Menu.Item>
+              <Menu.Item key="Spins">
+                Spins
+              </Menu.Item>
+                <Icon type="appstore" theme="twoTone" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginLeft: 20, marginRight: 20 }}/>
+              <Icon type="stock" style={{ fontSize: '18px', float: 'right', marginTop: 15 }}/>
+              <Icon type="lock" style={{ fontSize: '18px', float: 'right', marginTop: 15, marginRight: 20, marginLeft: 20 }}/>
+            </Menu>
+            <Menu>
+              <div className="demo">
+                <div style={{ paddingLeft: '20px', paddingRight: '20px', clear: 'both', whiteSpace: 'nowrap', width: '1319.200px' }}>
+                  <div>
+                    <RangePicker
+                      defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                      format={dateFormat}
+                    />
+                    <span> <Button><Icon type="plus" /> FILTERS</Button> </span>
+                  </div>
+                </div>
+              </div>
+            </Menu>
+          </Header>
+          <div style={{ width: '1279.200px', height: '90px' }} />
+        </div>
+
+        <div style={{ width: '1279.200px', height: '40px' }} />
+
+        <div style={{ marginLeft: '72px', marginRight: '72px' }}>
+          <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: '40px' }}>
+            <Row>
+              <Col span={12}>
+                <li>
+                  <Card title="Total sink by currency" style={{ width: '564px', margin: 'auto' }} >
+                    <Spin spinning={this.state.isLoading}>
+                      <Line
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'Conversion rate',
+                              data: chartData.conversionRate,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
+                        options={{
+                          maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
+                        }}
+                      />
+                    </Spin>
+                  </Card>
+                </li>
+              </Col>
+              <Col span={12}>
+                <li>
+                  <Card title="Total source by currency" style={{ width: '564px', margin: 'auto' }} >
+                    <Spin spinning={this.state.isLoading}>
+                      <Line
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'ARPDAU',
+                              data: chartData.ARPDAU,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
+                        options={{
+                          maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
+                        }}
+                      />
+                    </Spin>
+                  </Card>
+                </li>
+              </Col>
+            </Row> <br />
+            <Row>
+              <Col span={12}>
+                <li>
+                  <Card title="Number of transaction by currency sink" style={{ width: '564px', margin: 'auto' }} >
+                    <Spin spinning={this.state.isLoading}>
+                      <Line
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'ARPPU',
+                              data: chartData.revenue,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
+                        options={{
+                          maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
+                        }}
+                      />
+                    </Spin>
+                  </Card>
+                </li>
+              </Col>
+              <Col span={12}>
+                <li>
+                  <Card title="Number of transactions by currency source" style={{ width: '564px', margin: 'auto' }} >
+                    <Spin spinning={this.state.isLoading}>
+                      <Line
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'DAU',
+                              data: chartData.revenue,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
+                        options={{
+                          maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
+                        }}
+                      />
+                    </Spin>
+                  </Card>
+                </li>
+              </Col>
+            </Row> <br />
+            <Row>
+              <Col span={24}>
+                <li>
+                  <Card title="Total flow by currency" style={{ width: '1149.600px', margin: 'auto' }} >
+                    <Spin spinning={this.state.isLoading}>
+                      <Line
+                        data={{
+                          labels: chartData.thisWeek,
+                          datasets: [
+                            {
+                              label: 'Coins',
+                              data: chartData.revenue,
+                              backgroundColor: '#36a2eb',
+                              borderColor: '#36a2eb',
+                              fill: false
+                            }
+                          ]
+                        }}
+                        options={{
+                          maintainAspectRatio: true,
+                          legend: {
+                            display: this.props.displayLegend,
+                            position: this.props.legendPosition
+                          },
+                          scales: {
+                            yAxes: [{
+                              ticks: {
+                                callback: function (value, index, values) {
+                                  return '$' + value;
+                                }
+                              }
+                            }]
+                          }
+                        }}
+                      />
+                    </Spin>
+                  </Card>
+                </li>
+              </Col>
+            </Row>
+          </ul>
+        </div>
+      </React.Fragment>
     )
   }
 }
 
-export default Resources;
+export default Monetization;
